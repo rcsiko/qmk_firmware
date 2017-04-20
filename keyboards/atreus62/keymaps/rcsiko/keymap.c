@@ -77,10 +77,6 @@ const uint16_t PROGMEM fn_actions[] = {
     [1] = ACTION_FUNCTION(BSPC),
 };
 
-qk_tap_dance_action_t tap_dance_actions[] = {
-
-};
-
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     if (id == ESC) {
