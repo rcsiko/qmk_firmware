@@ -30,6 +30,10 @@
 #define XCODE_MOVE_UP    LALT(KC_UP)
 #define XCODE_MOVE_DOWN  LALT(KC_DOWN)
 
+#define BLINK_BASE  150U // timer threshold for blinking on CAPS layer
+
+typedef enum onoff_t {OFF, ON} onoff;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base Layer
  *
@@ -190,42 +194,49 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
 void matrix_init_user(void) {
 };
 
-uint8_t current_layer = BASE;
-
 // Runs constantly in the background, in a loop.
 void matrix_scan_user(void) {
   uint8_t layer = biton32(layer_state);
 
-  ergodox_led_all_off();
-  current_layer = layer;
+  static onoff board_led_state = OFF;
+  static uint16_t dt = 0;
 
-  // layer leds
-  if (current_layer != BASE) {
-    ergodox_board_led_on();
-  }
+  if(layer != CAPS) {
+      // Layer was just toggled.
+      if(layer == BASE) {
+          ergodox_board_led_off();
+          board_led_state = OFF;
+      } else {
+          ergodox_board_led_on();
+          board_led_state = ON;
+      }
 
-  // capslock
-  if (host_keyboard_leds() & (3<<USB_LED_CAPS_LOCK)) {
-    ergodox_board_led_on();
-  }
-
-  // Temporary leds
-
-  // if the shifted is pressed I show the case led in a brighter color. This is nice to
-  // differenciate the shift from the capslock.
-  // Notice that I make sure that we're not using the shift on a chord shortcut (pressing
-  // shift togather with other modifiers).
-  if((keyboard_report->mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) &&                                 // is shift pressed and there is no other
-      !(keyboard_report->mods & (~MOD_BIT(KC_LSFT) & ~MOD_BIT(KC_RSFT)))) ||                           //    modifier being pressed as well
-     (get_oneshot_mods() & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) && !has_oneshot_mods_timed_out())) {  // or the one shot shift didn't timed out
-    ergodox_board_led_on();
+      if((keyboard_report->mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) &&                                  // is shift pressed and there is no other
+          !(keyboard_report->mods & (~MOD_BIT(KC_LSFT) & ~MOD_BIT(KC_RSFT)))) ||                            //    modifier being pressed as well
+          (get_oneshot_mods() & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) && !has_oneshot_mods_timed_out())) {  // or the one shot shift didn't timed out
+          ergodox_board_led_on();
+      }
+  } else {
+      // We need to do blinking.
+      if(timer_elapsed(dt) > BLINK_BASE) {
+          // toggle
+          dt = timer_read();
+          if(board_led_state == OFF) {
+              ergodox_board_led_on();
+              board_led_state = ON;
+          } else {
+              ergodox_board_led_off();
+              board_led_state = OFF;
+          }
+      }
   }
 };
 
 bool process_record_user(uint16_t kc, keyrecord_t *rec) {
+    uint8_t layer = biton32(layer_state);
 
     // Add shift for letters
-    if (current_layer == CAPS) {
+    if (layer == CAPS) {
         switch (kc) {
             case KC_A...KC_Z:
                 if (rec->event.pressed) {
@@ -244,7 +255,7 @@ bool process_record_user(uint16_t kc, keyrecord_t *rec) {
 
     // Swap the numbers and symbols on the base layer if no other modifier is pressed
     if (!(keyboard_report->mods & (~MOD_BIT(KC_LSFT) & ~MOD_BIT(KC_RSFT))) && //    modifier being pressed
-        current_layer == BASE &&
+        layer == BASE &&
         (kc == KC_1 ||
          kc == KC_2 ||
          kc == KC_3 ||
