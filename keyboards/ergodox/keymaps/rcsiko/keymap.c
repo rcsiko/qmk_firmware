@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------+------+------+------+------+------|  =   |           |   -  |------+------+------+------+------+-----------|
  * | OSM_Shift |   Z  |   X  |   C  |   V  |   B  |  +   |           |   _  |   N  |   M  |   ,  |   .  |  / ? | OSM_Shift |
  * `-----------+------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
- *     |  SYM  |      |LCtrl | LAlt | LGui |                                       | Left | Down |  Up  | Right|  SYM  |
+ *     |  SYM  | LCAG |LCtrl | LAlt | LGui |                                       | Left | Down |  Up  | Right|  SYM  |
  *     `-----------------------------------'                                       `-----------------------------------'
  *                                         ,-------------.           ,-------------.
  *                                         |Ctl+6 | Q.Op |           | PgDn | PgUp |
@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_TAB,         KC_Q,       KC_W,     KC_E,           KC_R,       KC_T,     KC_LBRC,
               CTL_T(KC_ESC),  KC_A,       KC_S,     KC_D,           KC_F,       KC_G,
               OSM_LSFT,       KC_Z,       KC_X,     KC_C,           KC_V,       KC_B,     KC_EQL,
-              OSL(SYM),      _____,  KC_LCTRL,   KC_LALT,        KC_LGUI,
+              OSL(SYM),  LCAG(KC_NO),  KC_LCTRL,   KC_LALT,        KC_LGUI,
                                                                        XCODE_SHOW_ITEMS,  XCODE_QUICK_OPEN,
                                                                                           ITERM,
                                                                        KC_SPC, KC_BSPC,   SPOTLT,
