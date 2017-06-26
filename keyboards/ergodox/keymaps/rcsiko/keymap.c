@@ -6,9 +6,10 @@
 #include "keymap.h"
 #include "timer.h"
 
-#define BASE   0
-#define SYM    1
-#define NAV    2
+#define BASE      0
+#define MOUSE     1
+#define NAV       2
+#define CAPS      3
 
 #define OSM_LCTL OSM(MOD_LCTL)
 #define OSM_LALT OSM(MOD_LALT)
@@ -22,12 +23,17 @@
 #define _____ KC_NO
 #define xxxxx KC_TRNS
 
-#define SPOTLT           LGUI(KC_SPC)
-#define ITERM            LALT(KC_SPC)
-#define XCODE_SHOW_ITEMS LCTL(KC_6)
-#define XCODE_QUICK_OPEN LGUI(LSFT(KC_6))
-#define XCODE_MOVE_UP    LALT(KC_UP)
-#define XCODE_MOVE_DOWN  LALT(KC_DOWN)
+#define SPOTLT                      LGUI(KC_SPC)
+#define ITERM                       LALT(KC_SPC)
+#define PREV_TAB                    LGUI(LSFT(KC_LBRC))
+#define NEXT_TAB                    LGUI(LSFT(KC_RBRC))
+#define PREV_WS                     LGUI(LALT(LCTL(KC_LBRC)))
+#define NEXT_WS                     LGUI(LALT(LCTL(KC_RBRC)))
+#define XCODE_SHOW_ITEMS            LCTL(KC_6)
+#define XCODE_QUICK_OPEN            LGUI(LSFT(KC_O))
+#define XCODE_JUMP_COUNTERPART      LGUI(LCTL(KC_UP))
+#define XCODE_MOVE_DOWN             LALT(KC_DOWN)
+#define XCODE_MOVE_UP               LALT(KC_UP)
 
 #define BLINK_BASE  150U // timer threshold for blinking on CAPS layer
 
@@ -37,58 +43,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base Layer
  *
  * ,-----------------------------------------------------.           ,-----------------------------------------------------.
- * |    `~     |   1  |   2  |   3  |   4  |   5  |  <   |           |   >  |   6  |   7  |   8  |   9  |   0  | Backspace |
+ * |    `~     |   !  |   @  |   #  |   $  |   %  |      |           |      |   ^  |   &  |   *  |   (  |   )  | Backspace |
  * |-----------+------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
  * |  Tab      |   Q  |   W  |   E  |   R  |   T  |  {   |           |   }  |   Y  |   U  |   I  |   O  |   P  |   \ |     |
  * |-----------+------+------+------+------+------|  [   |           |   ]  |------+------+------+------+------+-----------|
  * | ESC(CTRL) |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  | ; NAV|   ' "     |
  * |-----------+------+------+------+------+------|  =   |           |   -  |------+------+------+------+------+-----------|
- * | OSM_Shift |   Z  |   X  |   C  |   V  |   B  |  +   |           |   _  |   N  |   M  |   ,  |   .  |  / ? | OSM_Shift |
+ * |   Shift   |   Z  |   X  |   C  |   V  |   B  |  +   |           |   _  |   N  |   M  |   ,  |   .  |  / ? |   Shift   |
  * `-----------+------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
- *     |       | LCAG |LCtrl | LAlt | LGui |                                       | Left | Down |  Up  | Right|       |
+ *     |Capslck|      |LCtrl | LAlt | LGui |                                       | Left | Down |  Up  | Right|       |
  *     `-----------------------------------'                                       `-----------------------------------'
  *                                         ,-------------.           ,-------------.
- *                                         |Ctl+6 | Q.Op |           | PgDn | PgUp |
+ *                                         |Ctl+6 | Q.Op |           | XJmp.|      |
  *                                  ,------|------|------|           |------+------+------.
- *                                  |      |      |iTerm |           |      |      |      |
+ *                                  |      |      |iTerm |           | PgUp |      |      |
  *                                  |Space | Bspc |------|           |------|Space | Enter|
- *                                  |      |      |Spotl.|           | SYM  |      |      |
+ *                                  | NAV  |      |Spotl.|           | PgDn |  MS  |  NAV |
  *                                  `--------------------'           `--------------------'
  *
  */
 [BASE]=KEYMAP(//left half
-              KC_GRV,         KC_1,       KC_2,     KC_3,           KC_4,       KC_5,     KC_LABK,
-              KC_TAB,         KC_Q,       KC_W,     KC_E,           KC_R,       KC_T,     KC_LBRC,
-              CTL_T(KC_ESC),  KC_A,       KC_S,     KC_D,           KC_F,       KC_G,
-              OSM_LSFT,       KC_Z,       KC_X,     KC_C,           KC_V,       KC_B,     KC_EQL,
-              _____,   LCAG(KC_NO),  KC_LCTRL,   KC_LALT,        KC_LGUI,
+              KC_GRV,         KC_1,           KC_2,     KC_3,           KC_4,       KC_5,     KC_LABK,
+              KC_TAB,         KC_Q,           KC_W,     KC_E,           KC_R,       KC_T,     KC_LBRC,
+              CTL_T(KC_ESC),  KC_A,           KC_S,     KC_D,           KC_F,       KC_G,
+              KC_LSFT,        KC_Z,           KC_X,     KC_C,           KC_V,       KC_B,     KC_EQL,
+              TT(CAPS),      _____,           KC_LCTRL,   KC_LALT,        KC_LGUI,
                                                                        XCODE_SHOW_ITEMS,  XCODE_QUICK_OPEN,
-                                                                                          ITERM,
-                                                                       KC_SPC, KC_BSPC,   SPOTLT,
+                                                                                                     ITERM,
+                                                                        LT(NAV, KC_SPC), KC_BSPC,   SPOTLT,
 
 
               //right half
               KC_RABK,        KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
               KC_RBRC,        KC_Y,       KC_U,     KC_I,        KC_O,       KC_P,              KC_BSLS,
                               KC_H,       KC_J,     KC_K,        KC_L,       LT(NAV, KC_SCLN),  KC_QUOT,
-              KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           OSM_LSFT,
+              KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           KC_LSFT,
                                           KC_LEFT,  KC_DOWN,     KC_UP,      KC_RIGHT,          _____,
-              KC_PGDOWN,    KC_PGUP,
-              _____,
-              TT(SYM),      KC_SPC,    KC_ENT),
+              XCODE_JUMP_COUNTERPART,    _____,
+              KC_PGUP,
+              KC_PGDOWN,   LT(MOUSE, KC_SPC),   LT(NAV, KC_ENT)),
 
-/* Keymap 1: Symbol Layer
+/* Keymap 1: Navigation Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |   !  |   @  |   {  |   }  |   |  |      |           | Vol. |   Up |   7  |   8  |   9  |   *  |   F12  |
- * |--------+------+------+------+------+------|      |           | Up   |------+------+------+------+------+--------|
- * |Caps lck|   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   +  |        |
- * |--------+------+------+------+------+------|      |           | Vol. |------+------+------+------+------+--------|
- * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           | Down |   &  |   1  |   2  |   3  |   \  |        |
+ * |        |      |      |      |      |      | Prev |           | Next |      | PgUp |  Up  |PgDown|      |   F12  |
+ * |--------+------+------+------+------+------| Tab  |           | Tab  |------+------+------+------+------+--------|
+ * |        |  Sft | Ctrl |  Alt | GUI  |      |------|           |------|      | Left | Down | Rigth|      |Vol.Up. |
+ * |--------+------+------+------+------+------| Prev |           | Next |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |  WS  |           |  WS  |      |      |      |      |      |Vol.Down|
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |   .  |   0  |   0  |   =  |      |
+ *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       | Prev | Next |
@@ -98,37 +104,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-// SYMBOLS
-[SYM] = KEYMAP(
+// Navigation
+[NAV] = KEYMAP(
                 // left hand
-                xxxxx,    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   xxxxx,
-                xxxxx,    KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, xxxxx,
-                xxxxx,    KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,
-                xxxxx,    KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, xxxxx,
-                xxxxx,    xxxxx, xxxxx, xxxxx, xxxxx,
-                                                             xxxxx, xxxxx,
-                                                                      xxxxx,
-                                                      xxxxx,xxxxx,xxxxx,
+                xxxxx,    KC_F1,    KC_F2,    KC_F3,     KC_F4,    KC_F5,  xxxxx,
+                xxxxx,    _____,   _____,     _____,     _____,    _____,  PREV_TAB,
+                xxxxx,    KC_LSFT, KC_LCTRL,  KC_LALT,   KC_LGUI,  _____,
+                xxxxx,    _____,   _____,     _____,     _____,    _____,  PREV_WS,
+                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,
+                                                              xxxxx, xxxxx,
+                                                                     xxxxx,
+                                                         xxxxx,xxxxx,xxxxx,
                 // right hand
-                xxxxx, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-                KC_VOLU, KC_UP,   KC_7,    KC_8,    KC_9,    KC_ASTR, KC_F12,
-                         KC_DOWN, KC_4,    KC_5,    KC_6,    KC_PLUS, xxxxx,
-                KC_VOLD, KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, xxxxx,
-                                  KC_DOT,  KC_0,    KC_0,    KC_EQL,  xxxxx,
+                xxxxx,    KC_F6,  KC_F7,     KC_F8,      KC_F9,      KC_F10,   KC_F11,
+                NEXT_TAB, _____,  KC_PGUP,    KC_UP,     KC_PGDOWN,  _____,   KC_F12,
+                          _____,  KC_LEFT,   KC_DOWN,    KC_RIGHT,   xxxxx,   KC_VOLU,
+                NEXT_WS,  _____,  _____,     _____,      _____,      _____,   KC_VOLD,
+                                  xxxxx,     xxxxx,      xxxxx,      xxxxx,   xxxxx,
                 KC_MRWD, KC_MFFD,
                 KC_MPLY,
                 xxxxx, xxxxx, xxxxx ),
 
-/* Keymap 1: Symbol Layer
+/* Keymap 1: Navigation Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |     |         |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |        |      |      |      |      |      |      |           |      |      | Lclk | MsUp | Rclk |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |------|           |------| Left | Down |  Up  |Right |      |        |
+ * |        |  Sft | Ctrl |  Alt | GUI  |      |------|           |------|      |MsLeft|MsDown|MsRght|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |        |      |      |      |      |      |      |           |      |WhRght|WhDown| WhUp |WhLeft|WhClk |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -140,26 +146,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-// NAV
-[NAV] = KEYMAP(
+// Mouse
+[MOUSE] = KEYMAP(
+               // left hand
+              xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  xxxxx,
+              xxxxx,    _____,   KC_ACL0,   KC_ACL1,   KC_ACL2,  _____,  xxxxx,
+              xxxxx,    KC_LSFT, KC_LCTRL,  KC_LALT,   KC_LGUI,  _____,
+              xxxxx,    _____,   _____,     _____,     _____,    _____,  xxxxx,
+              xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,
+                                                              xxxxx, xxxxx,
+                                                                     xxxxx,
+                                                         xxxxx,xxxxx,xxxxx,
+               // right hand
+               xxxxx, xxxxx,   xxxxx,     xxxxx,    xxxxx,     xxxxx,   xxxxx,
+               xxxxx, _____,   KC_BTN1,   KC_MS_U,  KC_BTN2,   _____,   xxxxx,
+                      _____,   KC_MS_L,   KC_MS_D,  KC_MS_R,   _____,   xxxxx,
+               xxxxx, KC_WH_L, KC_WH_D,   KC_WH_U,  KC_WH_R,   KC_BTN3, xxxxx,
+                               xxxxx,     xxxxx,    xxxxx,     xxxxx,   xxxxx,
+               xxxxx, xxxxx,
+               xxxxx,
+               xxxxx, xxxxx, xxxxx ),
+// Capslock
+// Custom caps lock layer to workaround macOS caps lock delay
+[CAPS] = KEYMAP(
                // left hand
                xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
                xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
                xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
                xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
                xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
-                                                  xxxxx, xxxxx,
-                                                         xxxxx,
-                                             xxxxx,xxxxx,xxxxx,
+               xxxxx, xxxxx,
+               xxxxx,
+               xxxxx,xxxxx,xxxxx,
                // right hand
                xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx, xxxxx,
                xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx, xxxxx,
-                      KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, xxxxx, xxxxx,
+               xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx,
                xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx, xxxxx,
-                               xxxxx,   xxxxx,   xxxxx,    xxxxx, xxxxx,
+               xxxxx, xxxxx,   xxxxx,    xxxxx, xxxxx,
                xxxxx, xxxxx,
                xxxxx,
-               xxxxx, xxxxx, xxxxx )
+               xxxxx, xxxxx, xxxxx ),
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
@@ -178,7 +205,7 @@ void matrix_scan_user(void) {
   static onoff board_led_state = OFF;
   static uint16_t dt = 0;
 
-  if (get_oneshot_mods() && !has_oneshot_mods_timed_out()) {
+  if ((get_oneshot_mods() && !has_oneshot_mods_timed_out())) {
       if(timer_elapsed(dt) > BLINK_BASE) {
 
         dt = timer_read();
@@ -197,11 +224,6 @@ void matrix_scan_user(void) {
       } else {
        ergodox_board_led_on();
         board_led_state = ON;
-      }
-
-      if((keyboard_report->mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) &&      // is shift pressed and there is no other
-        !(keyboard_report->mods & (~MOD_BIT(KC_LSFT) & ~MOD_BIT(KC_RSFT))))) {  // modifier being pressed as well
-        ergodox_board_led_on();
       }
   }
 };
