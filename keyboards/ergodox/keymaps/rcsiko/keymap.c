@@ -10,6 +10,7 @@
 #define MOUSE     1
 #define NAV       2
 #define CAPS      3
+#define NUM       4
 
 #define OSM_LCTL OSM(MOD_LCTL)
 #define OSM_LALT OSM(MOD_LALT)
@@ -43,52 +44,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base Layer
  *
  * ,-----------------------------------------------------.           ,-----------------------------------------------------.
- * |    `~     |   !  |   @  |   #  |   $  |   %  |      |           |      |   ^  |   &  |   *  |   (  |   )  | Backspace |
+ * |    `~     |   !  |   @  |   #  |   $  |   %  |  F4  |           |   "  |   ^  |   &  |   *  |   (  |   )  | Backspace |
  * |-----------+------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
  * |  Tab      |   Q  |   W  |   E  |   R  |   T  |  {   |           |   }  |   Y  |   U  |   I  |   O  |   P  |   \ |     |
  * |-----------+------+------+------+------+------|  [   |           |   ]  |------+------+------+------+------+-----------|
- * | ESC(CTRL) |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  | ; NAV|   ' "     |
+ * | ESC(CTRL) |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  | ; NAV|  ' "/Alt  |
  * |-----------+------+------+------+------+------|  =   |           |   -  |------+------+------+------+------+-----------|
  * |   Shift   |   Z  |   X  |   C  |   V  |   B  |  +   |           |   _  |   N  |   M  |   ,  |   .  |  / ? |   Shift   |
  * `-----------+------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
- *     |Capslck|      |LCtrl | LAlt | LGui |                                       | Left | Down |  Up  | Right|       |
+ *     |       |      |LCtrl | LAlt | LGui |                                       | Left | Down |  Up  | Right|       |
  *     `-----------------------------------'                                       `-----------------------------------'
  *                                         ,-------------.           ,-------------.
- *                                         |Ctl+6 | Q.Op |           | XJmp.|      |
+ *                                         |Ctl+6 | Q.Op |           |      |      |
  *                                  ,------|------|------|           |------+------+------.
  *                                  |      |      |iTerm |           | PgUp |      |      |
  *                                  |Space | Bspc |------|           |------|Space | Enter|
- *                                  | NAV  |      |Spotl.|           | PgDn |  MS  |  NAV |
+ *                                  | SFT  |      |Spotl.|           | PgDn |  MS  |  NUM |
  *                                  `--------------------'           `--------------------'
  *
  */
 [BASE]=KEYMAP(//left half
-              KC_GRV,         KC_1,           KC_2,     KC_3,           KC_4,       KC_5,     KC_LABK,
-              KC_TAB,         KC_Q,           KC_W,     KC_E,           KC_R,       KC_T,     KC_LBRC,
-              CTL_T(KC_ESC),  KC_A,           KC_S,     KC_D,           KC_F,       KC_G,
-              KC_LSFT,        KC_Z,           KC_X,     KC_C,           KC_V,       KC_B,     KC_EQL,
-              TT(CAPS),      _____,           KC_LCTRL,   KC_LALT,        KC_LGUI,
+              KC_GRV,         KC_1,           KC_2,       KC_3,           KC_4,       KC_5,     KC_F4,
+              KC_TAB,         KC_Q,           KC_W,       KC_E,           KC_R,       KC_T,     KC_LBRC,
+              CTL_T(KC_ESC),  KC_A,           KC_S,       KC_D,           KC_F,       KC_G,
+              OSM_LSFT,       KC_Z,           KC_X,       KC_C,           KC_V,       KC_B,     KC_EQL,
+              _____,         _____,           KC_LCTRL,   KC_LALT,        KC_LGUI,
                                                                        XCODE_SHOW_ITEMS,  XCODE_QUICK_OPEN,
                                                                                                      ITERM,
-                                                                        LT(NAV, KC_SPC), KC_BSPC,   SPOTLT,
+                                                                        LSFT_T(KC_SPC), KC_BSPC,   SPOTLT,
 
 
               //right half
-              KC_RABK,        KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
+              KC_DQT,         KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
               KC_RBRC,        KC_Y,       KC_U,     KC_I,        KC_O,       KC_P,              KC_BSLS,
-                              KC_H,       KC_J,     KC_K,        KC_L,       LT(NAV, KC_SCLN),  KC_QUOT,
-              KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           KC_LSFT,
-                                          KC_LEFT,  KC_DOWN,     KC_UP,      KC_RIGHT,          _____,
-              XCODE_JUMP_COUNTERPART,    _____,
+                              KC_H,       KC_J,     KC_K,        KC_L,       LT(NAV, KC_SCLN),  LALT_T(KC_QUOT),
+              KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           OSM_LSFT,
+                                          KC_LEFT,  KC_DOWN,     KC_UP,      KC_RIGHT,             _____,
+              _____,    _____,
               KC_PGUP,
-              KC_PGDOWN,   LT(MOUSE, KC_SPC),   LT(NAV, KC_ENT)),
+              KC_PGDOWN,   LT(MOUSE, KC_SPC),   LT(NUM, KC_ENT) ),
 
 /* Keymap 1: Navigation Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      | Prev |           | Next |      | PgUp |  Up  |PgDown|      |   F12  |
+ * |        |      |      |      |      |      | Prev |           | Next |      | PgUp |  Up  |PgDown|      |        |
  * |--------+------+------+------+------+------| Tab  |           | Tab  |------+------+------+------+------+--------|
  * |        |  Sft | Ctrl |  Alt | GUI  |      |------|           |------|      | Left | Down | Rigth|      |Vol.Up. |
  * |--------+------+------+------+------+------| Prev |           | Next |------+------+------+------+------+--------|
@@ -107,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Navigation
 [NAV] = KEYMAP(
                 // left hand
-                xxxxx,    KC_F1,    KC_F2,    KC_F3,     KC_F4,    KC_F5,  xxxxx,
+                xxxxx,     KC_F1,   KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
                 xxxxx,    _____,   _____,     _____,     _____,    _____,  PREV_TAB,
                 xxxxx,    KC_LSFT, KC_LCTRL,  KC_LALT,   KC_LGUI,  _____,
                 xxxxx,    _____,   _____,     _____,     _____,    _____,  PREV_WS,
@@ -116,8 +117,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                      xxxxx,
                                                          xxxxx,xxxxx,xxxxx,
                 // right hand
-                xxxxx,    KC_F6,  KC_F7,     KC_F8,      KC_F9,      KC_F10,   KC_F11,
-                NEXT_TAB, _____,  KC_PGUP,    KC_UP,     KC_PGDOWN,  _____,   KC_F12,
+                KC_F7,     KC_F8,  KC_F9,    KC_F10,     KC_F11,     KC_F12,     xxxxx,
+                NEXT_TAB, _____,  KC_PGUP,    KC_UP,     KC_PGDOWN,  _____,   xxxxx,
                           _____,  KC_LEFT,   KC_DOWN,    KC_RIGHT,   xxxxx,   KC_VOLU,
                 NEXT_WS,  _____,  _____,     _____,      _____,      _____,   KC_VOLD,
                                   xxxxx,     xxxxx,      xxxxx,      xxxxx,   xxxxx,
@@ -166,27 +167,51 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                xxxxx, xxxxx,
                xxxxx,
                xxxxx, xxxxx, xxxxx ),
-// Capslock
-// Custom caps lock layer to workaround macOS caps lock delay
-[CAPS] = KEYMAP(
-               // left hand
-               xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
-               xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
-               xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
-               xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
-               xxxxx, xxxxx, xxxxx, xxxxx, xxxxx,
-               xxxxx, xxxxx,
-               xxxxx,
-               xxxxx,xxxxx,xxxxx,
-               // right hand
-               xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx, xxxxx,
-               xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx, xxxxx,
-               xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx,
-               xxxxx, xxxxx,   xxxxx,   xxxxx,   xxxxx,    xxxxx, xxxxx,
-               xxxxx, xxxxx,   xxxxx,    xxxxx, xxxxx,
-               xxxxx, xxxxx,
-               xxxxx,
-               xxxxx, xxxxx, xxxxx ),
+
+/* Keymap 4: Numlock
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12   |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      | Vol+ |  7   |  8   |  9   |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------| Vol- |  4   |  5   |  6   |      |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      | Mute |  1   |  2   |  3   |      |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |      |                                       |   0  |  0   |  .   |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |      |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------        |------|      |      |
+ *                                 |      |      |      |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+[NUM] = KEYMAP(
+       xxxxx,        KC_F1,      KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
+       xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
+       xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,
+       xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
+       xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,
+
+                     xxxxx,    xxxxx,
+                               xxxxx,
+       xxxxx,        xxxxx,    xxxxx,
+
+       // right hand
+       KC_F7,        KC_F8,      KC_F9,      KC_F10,     KC_F11,     KC_F12,     xxxxx,
+       xxxxx,        KC_VOLU,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,    xxxxx,
+                     KC_VOLD,    KC_P4,      KC_P5,      KC_P6,      KC_PPLS,    xxxxx,
+       xxxxx,        KC_MUTE,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,    xxxxx,
+                                 KC_P0,      KC_P0,      KC_PDOT,    xxxxx,      xxxxx,
+
+       xxxxx,        xxxxx,
+       xxxxx,
+       xxxxx,        xxxxx,    xxxxx
+),
+
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
@@ -218,12 +243,12 @@ void matrix_scan_user(void) {
         }
       }
   } else {
-      if(layer == BASE) {
-        ergodox_board_led_off();
-        board_led_state = OFF;
-      } else {
-       ergodox_board_led_on();
+      if(layer != BASE || keyboard_report->mods & MOD_BIT(KC_LSFT)) {
+        ergodox_board_led_on();
         board_led_state = ON;
+      } else {
+       ergodox_board_led_off();
+        board_led_state = OFF;
       }
   }
 };
