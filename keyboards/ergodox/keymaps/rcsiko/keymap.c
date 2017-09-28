@@ -40,6 +40,16 @@
 
 typedef enum onoff_t {OFF, ON} onoff;
 
+static bool gSwapNumbersAndSymbols = true;
+
+enum own_keys {
+  SWAP_SYMS = SAFE_RANGE
+};
+
+enum {
+  DR_A  = 0
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base Layer
  *
@@ -48,18 +58,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------+------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
  * |  Tab      |   Q  |   W  |   E  |   R  |   T  |  {   |           |   }  |   Y  |   U  |   I  |   O  |   P  |   \ |     |
  * |-----------+------+------+------+------+------|  [   |           |   ]  |------+------+------+------+------+-----------|
- * | ESC(CTRL) |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  | ; NAV|  ' "/Alt  |
+ * | ESC(CTRL) |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  | ; NAV| ' "/Ctrl  |
  * |-----------+------+------+------+------+------|  =   |           |   -  |------+------+------+------+------+-----------|
  * |   Shift   |   Z  |   X  |   C  |   V  |   B  |  +   |           |   _  |   N  |   M  |   ,  |   .  |  / ? |   Shift   |
  * `-----------+------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
- *     |       |      |LCtrl | LAlt | LGui |                                       | Left | Down |  Up  | Right|       |
+ *     | SWAP  |      |LCtrl | LAlt | LGui |                                       | NAV  | Left | Down |  Up  | Right |
  *     `-----------------------------------'                                       `-----------------------------------'
  *                                         ,-------------.           ,-------------.
- *                                         |Ctl+6 | Q.Op |           |      |      |
+ *                                         |Ctl+6 | JtoC |           |      |      |
  *                                  ,------|------|------|           |------+------+------.
  *                                  |      |      |iTerm |           | PgUp |      |      |
  *                                  |Space | Bspc |------|           |------|Space | Enter|
- *                                  | SFT  |      |Spotl.|           | PgDn |  MS  |  NUM |
+ *                                  | NUM  |      |Spotl.|           | PgDn |      |  NUM |
  *                                  `--------------------'           `--------------------'
  *
  */
@@ -67,75 +77,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_GRV,         KC_1,           KC_2,       KC_3,           KC_4,       KC_5,     KC_F4,
               KC_TAB,         KC_Q,           KC_W,       KC_E,           KC_R,       KC_T,     KC_LBRC,
               CTL_T(KC_ESC),  KC_A,           KC_S,       KC_D,           KC_F,       KC_G,
-              OSM_LSFT,       KC_Z,           KC_X,       KC_C,           KC_V,       KC_B,     KC_EQL,
-              _____,         _____,           KC_LCTRL,   KC_LALT,        KC_LGUI,
-                                                                       XCODE_SHOW_ITEMS,  XCODE_QUICK_OPEN,
+              KC_LSFT,        KC_Z,           KC_X,       KC_C,           KC_V,       KC_B,     KC_EQL,
+            SWAP_SYMS,       _____,           KC_LCTRL,   KC_LALT,        KC_LGUI,
+                                                                       XCODE_SHOW_ITEMS,  XCODE_JUMP_COUNTERPART,
                                                                                                      ITERM,
-                                                                        LSFT_T(KC_SPC), KC_BSPC,   SPOTLT,
+                                                                          LT(NUM, KC_SPC),  KC_BSPC,   SPOTLT,
 
 
               //right half
               KC_DQT,         KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
               KC_RBRC,        KC_Y,       KC_U,     KC_I,        KC_O,       KC_P,              KC_BSLS,
-                              KC_H,       KC_J,     KC_K,        KC_L,       LT(NAV, KC_SCLN),  LALT_T(KC_QUOT),
-              KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           OSM_LSFT,
-                                          KC_LEFT,  KC_DOWN,     KC_UP,      KC_RIGHT,             _____,
+                              KC_H,       KC_J,     KC_K,        KC_L,       LT(NAV, KC_SCLN),  CTL_T(KC_QUOT),
+              KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           KC_LSFT,
+                                       TG(NAV),     ALT_T(KC_LEFT),    KC_DOWN,     KC_UP,             KC_RIGHT,
               _____,    _____,
               KC_PGUP,
-              KC_PGDOWN,   LT(MOUSE, KC_SPC),   LT(NUM, KC_ENT) ),
+              KC_PGDOWN,   KC_SPC,   LT(NUM, KC_ENT) ),
 
 /* Keymap 1: Navigation Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      | Prev |           | Next |      | PgUp |  Up  |PgDown|      |        |
- * |--------+------+------+------+------+------| Tab  |           | Tab  |------+------+------+------+------+--------|
- * |        |  Sft | Ctrl |  Alt | GUI  |      |------|           |------|      | Left | Down | Rigth|      |Vol.Up. |
- * |--------+------+------+------+------+------| Prev |           | Next |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |  WS  |           |  WS  |      |      |      |      |      |Vol.Down|
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |      |      |      |      |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       | Prev | Next |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       | Play |      |      |
- *                                 |      |      |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-// Navigation
-[NAV] = KEYMAP(
-                // left hand
-                xxxxx,     KC_F1,   KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
-                xxxxx,    _____,   _____,     _____,     _____,    _____,  PREV_TAB,
-                xxxxx,    KC_LSFT, KC_LCTRL,  KC_LALT,   KC_LGUI,  _____,
-                xxxxx,    _____,   _____,     _____,     _____,    _____,  PREV_WS,
-                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,
-                                                              xxxxx, xxxxx,
-                                                                     xxxxx,
-                                                         xxxxx,xxxxx,xxxxx,
-                // right hand
-                KC_F7,     KC_F8,  KC_F9,    KC_F10,     KC_F11,     KC_F12,     xxxxx,
-                NEXT_TAB, _____,  KC_PGUP,    KC_UP,     KC_PGDOWN,  _____,   xxxxx,
-                          _____,  KC_LEFT,   KC_DOWN,    KC_RIGHT,   xxxxx,   KC_VOLU,
-                NEXT_WS,  _____,  _____,     _____,      _____,      _____,   KC_VOLD,
-                                  xxxxx,     xxxxx,      xxxxx,      xxxxx,   xxxxx,
-                KC_MRWD, KC_MFFD,
-                KC_MPLY,
-                xxxxx, xxxxx, xxxxx ),
-
-/* Keymap 1: Navigation Layer
- *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |     |         |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      | Lclk | MsUp | Rclk |      |        |
+ * |        |      |      |      |      |      |      |           |      |      | PgUp |  Up  |PgDown|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |  Sft | Ctrl |  Alt | GUI  |      |------|           |------|      |MsLeft|MsDown|MsRght|      |        |
+ * |        |  Sft | Ctrl |  Alt | GUI  |      |------|           |------|      | Left | Down | Rigth|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |WhRght|WhDown| WhUp |WhLeft|WhClk |        |
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -147,37 +115,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-// Mouse
-[MOUSE] = KEYMAP(
-               // left hand
-              xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  xxxxx,
-              xxxxx,    _____,   KC_ACL0,   KC_ACL1,   KC_ACL2,  _____,  xxxxx,
-              xxxxx,    KC_LSFT, KC_LCTRL,  KC_LALT,   KC_LGUI,  _____,
-              xxxxx,    _____,   _____,     _____,     _____,    _____,  xxxxx,
-              xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,
+// Navigation
+[NAV] = KEYMAP(
+                // left hand
+                _____,     KC_F1,   KC_F2,    KC_F3,     KC_F4,    KC_F5,    KC_F6,
+                _____,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  _____,
+                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,
+                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  _____,
+                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,
                                                               xxxxx, xxxxx,
                                                                      xxxxx,
                                                          xxxxx,xxxxx,xxxxx,
-               // right hand
-               xxxxx, xxxxx,   xxxxx,     xxxxx,    xxxxx,     xxxxx,   xxxxx,
-               xxxxx, _____,   KC_BTN1,   KC_MS_U,  KC_BTN2,   _____,   xxxxx,
-                      _____,   KC_MS_L,   KC_MS_D,  KC_MS_R,   _____,   xxxxx,
-               xxxxx, KC_WH_L, KC_WH_D,   KC_WH_U,  KC_WH_R,   KC_BTN3, xxxxx,
-                               xxxxx,     xxxxx,    xxxxx,     xxxxx,   xxxxx,
-               xxxxx, xxxxx,
-               xxxxx,
-               xxxxx, xxxxx, xxxxx ),
+                // right hand
+                KC_F7,  KC_F8,  KC_F9,    KC_F10,      KC_F11,     KC_F12,  xxxxx,
+                _____,  xxxxx,  xxxxx,    KC_UP,       xxxxx,      xxxxx,   xxxxx,
+                        xxxxx,  KC_LEFT,   KC_DOWN,    KC_RIGHT,   xxxxx,   xxxxx,
+                _____,  xxxxx,  xxxxx,     xxxxx,      xxxxx,      xxxxx,   xxxxx,
+                                xxxxx,     _____,      _____,      _____,   _____,
+                xxxxx, xxxxx,
+                xxxxx,
+                xxxxx, xxxxx, xxxxx ),
+
 
 /* Keymap 4: Numlock
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      | Vol+ |  7   |  8   |  9   |      |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |------|           |------| Vol- |  4   |  5   |  6   |      |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      | Mute |  1   |  2   |  3   |      |        |
+ * |        |      |      |      |      |      |      |           | Next | Vol+ |  7   |  8   |  9   |      |        |
+ * |--------+------+------+------+------+------|      |           | Song |------+------+------+------+------+--------|
+ * |        | P.Tab| P.Ws | N.Ws |N.Tab |      |------|           |------| Vol- |  4   |  5   |  6   |      |        |
+ * |--------+------+------+------+------+------|      |           | Prev |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           | Song | Mute |  1   |  2   |  3   |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       |   0  |  0   |  .   |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -192,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [NUM] = KEYMAP(
        xxxxx,        KC_F1,      KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
        xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
-       xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,
+       xxxxx,        PREV_TAB,   PREV_WS,  NEXT_WS,  NEXT_TAB, xxxxx,
        xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
        xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,
 
@@ -202,16 +171,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
        // right hand
        KC_F7,        KC_F8,      KC_F9,      KC_F10,     KC_F11,     KC_F12,     xxxxx,
-       xxxxx,        KC_VOLU,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,    xxxxx,
+       KC_MRWD,      KC_VOLU,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,    xxxxx,
                      KC_VOLD,    KC_P4,      KC_P5,      KC_P6,      KC_PPLS,    xxxxx,
-       xxxxx,        KC_MUTE,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,    xxxxx,
+       KC_MFFD,      KC_MUTE,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,    xxxxx,
                                  KC_P0,      KC_P0,      KC_PDOT,    xxxxx,      xxxxx,
 
        xxxxx,        xxxxx,
        xxxxx,
        xxxxx,        xxxxx,    xxxxx
-),
+)
 
+};
+
+qk_dual_role_action_t dual_role_keys[] = {
+  [DR_A]      = DUAL_ROLE(NUM, KC_A)
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
@@ -251,13 +224,26 @@ void matrix_scan_user(void) {
         board_led_state = OFF;
       }
   }
+
+  if (!gSwapNumbersAndSymbols) {
+    ergodox_right_led_1_on();
+  } else {
+    ergodox_right_led_1_off();
+  }
 };
 
 bool process_record_user(uint16_t kc, keyrecord_t *rec) {
     uint8_t layer = biton32(layer_state);
 
+    if (kc == SWAP_SYMS) {
+      if (rec->event.pressed) {
+        gSwapNumbersAndSymbols = !gSwapNumbersAndSymbols;
+      }
+    }
+
     // Swap the numbers and symbols on the base layer if no other modifier is pressed
-    if (!(keyboard_report->mods & (~MOD_BIT(KC_LSFT) & ~MOD_BIT(KC_RSFT))) && //    modifier being pressed
+    if (gSwapNumbersAndSymbols &&
+        !(keyboard_report->mods & (~MOD_BIT(KC_LSFT) & ~MOD_BIT(KC_RSFT))) && //    modifier being pressed
         layer == BASE &&
         (kc == KC_1 ||
          kc == KC_2 ||
