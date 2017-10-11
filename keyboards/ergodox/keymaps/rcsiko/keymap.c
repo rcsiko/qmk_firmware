@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base Layer
  *
  * ,-----------------------------------------------------.           ,-----------------------------------------------------.
- * |    `~     |   !  |   @  |   #  |   $  |   %  |  F4  |           |   "  |   ^  |   &  |   *  |   (  |   )  | Backspace |
+ * |    `~     |   !  |   @  |   #  |   $  |   %  |  F4  |           |  NUM |   ^  |   &  |   *  |   (  |   )  | Backspace |
  * |-----------+------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
  * |  Tab      |   Q  |   W  |   E  |   R  |   T  |  {   |           |   }  |   Y  |   U  |   I  |   O  |   P  |   \ |     |
  * |-----------+------+------+------+------+------|  [   |           |   ]  |------+------+------+------+------+-----------|
@@ -62,14 +62,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------+------+------+------+------+------|  =   |           |   -  |------+------+------+------+------+-----------|
  * |   Shift   |   Z  |   X  |   C  |   V  |   B  |  +   |           |   _  |   N  |   M  |   ,  |   .  |  / ? |   Shift   |
  * `-----------+------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
- *     | SWAP  |      |LCtrl | LAlt | LGui |                                       | NAV  | Left | Down |  Up  | Right |
+ *     |       |      |      | LAlt | LGui |                                       | RAlt |      |      |      |  LGAC |
  *     `-----------------------------------'                                       `-----------------------------------'
  *                                         ,-------------.           ,-------------.
- *                                         |Ctl+6 | JtoC |           |      |      |
+ *                                         |Ctl+6 | JtoC |           |Pr.Ws.|Nxt.Ws|
  *                                  ,------|------|------|           |------+------+------.
  *                                  |      |      |iTerm |           | PgUp |      |      |
  *                                  |Space | Bspc |------|           |------|Space | Enter|
- *                                  | NUM  |      |Spotl.|           | PgDn |      |  NUM |
+ *                                  |      |      |Spotl.|           | PgDn |      |  NUM |
  *                                  `--------------------'           `--------------------'
  *
  */
@@ -78,30 +78,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_TAB,         KC_Q,           KC_W,       KC_E,           KC_R,       KC_T,     KC_LBRC,
               CTL_T(KC_ESC),  KC_A,           KC_S,       KC_D,           KC_F,       KC_G,
               KC_LSFT,        KC_Z,           KC_X,       KC_C,           KC_V,       KC_B,     KC_EQL,
-            SWAP_SYMS,       _____,           KC_LCTRL,   KC_LALT,        KC_LGUI,
-                                                                       XCODE_SHOW_ITEMS,  XCODE_JUMP_COUNTERPART,
+              _____,         _____,           _____,   KC_LALT,        KC_LGUI,
+                                                                 XCODE_SHOW_ITEMS,  XCODE_JUMP_COUNTERPART,
                                                                                                      ITERM,
-                                                                          LT(NUM, KC_SPC),  KC_BSPC,   SPOTLT,
+                                                                                KC_SPC,  KC_BSPC,   SPOTLT,
 
 
               //right half
-              KC_DQT,         KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
+              TG(NUM),        KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
               KC_RBRC,        KC_Y,       KC_U,     KC_I,        KC_O,       KC_P,              KC_BSLS,
                               KC_H,       KC_J,     KC_K,        KC_L,       LT(NAV, KC_SCLN),  CTL_T(KC_QUOT),
               KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           KC_LSFT,
-                                       TG(NAV),     ALT_T(KC_LEFT),    KC_DOWN,     KC_UP,             KC_RIGHT,
-              _____,    _____,
+                                       KC_RALT,     _____,        _____,     _____,             LCAG(KC_NO),
+              PREV_WS,    NEXT_WS,
               KC_PGUP,
               KC_PGDOWN,   KC_SPC,   LT(NUM, KC_ENT) ),
 
 /* Keymap 1: Navigation Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12   |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      | PgUp |  Up  |PgDown|      |        |
+ * |        |      |      |      |      |      |      |           |      |      |      |  Up  |      |      |  F12   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |  Sft | Ctrl |  Alt | GUI  |      |------|           |------|      | Left | Down | Rigth|      |        |
+ * |        |      |      |      |      |      |------|           |------|      | Left | Down | Rigth|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -118,20 +118,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Navigation
 [NAV] = KEYMAP(
                 // left hand
-                _____,     KC_F1,   KC_F2,    KC_F3,     KC_F4,    KC_F5,    KC_F6,
-                _____,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  _____,
+                xxxxx,    KC_F1,   KC_F2,     KC_F3,     KC_F4,    KC_F5,  xxxxx,
+                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  xxxxx,
                 xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,
-                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  _____,
+                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  xxxxx,
                 xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,
                                                               xxxxx, xxxxx,
                                                                      xxxxx,
                                                          xxxxx,xxxxx,xxxxx,
                 // right hand
-                KC_F7,  KC_F8,  KC_F9,    KC_F10,      KC_F11,     KC_F12,  xxxxx,
-                _____,  xxxxx,  xxxxx,    KC_UP,       xxxxx,      xxxxx,   xxxxx,
-                        xxxxx,  KC_LEFT,   KC_DOWN,    KC_RIGHT,   xxxxx,   xxxxx,
-                _____,  xxxxx,  xxxxx,     xxxxx,      xxxxx,      xxxxx,   xxxxx,
-                                xxxxx,     _____,      _____,      _____,   _____,
+                xxxxx,  KC_F6,  KC_F7,     KC_F8,       KC_F9,     KC_F10,  KC_F11,
+                xxxxx,  xxxxx,  xxxxx,     KC_UP,       xxxxx,      xxxxx,  KC_F12,
+                        xxxxx,  KC_LEFT,   KC_DOWN,  KC_RIGHT,      xxxxx,   xxxxx,
+                xxxxx,  xxxxx,  xxxxx,     xxxxx,       xxxxx,      xxxxx,   xxxxx,
+                                xxxxx,     xxxxx,       xxxxx,      xxxxx,   xxxxx,
                 xxxxx, xxxxx,
                 xxxxx,
                 xxxxx, xxxxx, xxxxx ),
@@ -140,15 +140,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 4: Numlock
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |           |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12   |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           | Play |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           | Next | Vol+ |  7   |  8   |  9   |      |        |
+ * |        |      |      |      |      |      |      |           | Next | Vol+ |  7   |  8   |  9   |  *   |  F12   |
  * |--------+------+------+------+------+------|      |           | Song |------+------+------+------+------+--------|
- * |        | P.Tab| P.Ws | N.Ws |N.Tab |      |------|           |------| Vol- |  4   |  5   |  6   |      |        |
+ * |        | P.Tab| P.Ws | N.Ws |N.Tab |      |------|           |------| Vol- |  4   |  5   |  6   |  +   |        |
  * |--------+------+------+------+------+------|      |           | Prev |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           | Song | Mute |  1   |  2   |  3   |      |        |
+ * |        |      |      |      |      |      |      |           | Song | Mute |  1   |  2   |  3   |  /   |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |   0  |  0   |  .   |      |      |
+ *   |      |      |      |      |      |                                       |  .   |  0   |  .   |  -   |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
@@ -159,9 +159,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 [NUM] = KEYMAP(
-       xxxxx,        KC_F1,      KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
+       xxxxx,        KC_F1,      KC_F2,    KC_F3,    KC_F4,    KC_F5,    xxxxx,
        xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
-       xxxxx,        PREV_TAB,   PREV_WS,  NEXT_WS,  NEXT_TAB, xxxxx,
+       xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,
        xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
        xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,
 
@@ -170,11 +170,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        xxxxx,        xxxxx,    xxxxx,
 
        // right hand
-       KC_F7,        KC_F8,      KC_F9,      KC_F10,     KC_F11,     KC_F12,     xxxxx,
-       KC_MRWD,      KC_VOLU,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,    xxxxx,
+       KC_MPLY       KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,
+       KC_MRWD,      KC_VOLU,    KC_P7,      KC_P8,      KC_P9,      KC_PAST,    KC_F12,
                      KC_VOLD,    KC_P4,      KC_P5,      KC_P6,      KC_PPLS,    xxxxx,
-       KC_MFFD,      KC_MUTE,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,    xxxxx,
-                                 KC_P0,      KC_P0,      KC_PDOT,    xxxxx,      xxxxx,
+       KC_MFFD,      KC_MUTE,    KC_P1,      KC_P2,      KC_P3,      KC_PSLS,    xxxxx,
+                                 KC_PDOT,    KC_P0,      KC_PDOT,    KC_PMNS,      xxxxx,
 
        xxxxx,        xxxxx,
        xxxxx,
