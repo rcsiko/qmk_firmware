@@ -11,6 +11,7 @@
 #define NAV       2
 #define CAPS      3
 #define NUM       4
+#define NUMPAD    5
 
 #define OSM_LCTL OSM(MOD_LCTL)
 #define OSM_LALT OSM(MOD_LALT)
@@ -54,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base Layer
  *
  * ,-----------------------------------------------------.           ,-----------------------------------------------------.
- * |    `~     |   !  |   @  |   #  |   $  |   %  |  F4  |           |  NUM |   ^  |   &  |   *  |   (  |   )  | Backspace |
+ * |    `~     |   !  |   @  |   #  |   $  |   %  |  F4  |           |NUMPAD|   ^  |   &  |   *  |   (  |   )  | Backspace |
  * |-----------+------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
  * |  Tab      |   Q  |   W  |   E  |   R  |   T  |  {   |           |   }  |   Y  |   U  |   I  |   O  |   P  |   \ |     |
  * |-----------+------+------+------+------+------|  [   |           |   ]  |------+------+------+------+------+-----------|
@@ -69,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                  ,------|------|------|           |------+------+------.
  *                                  |      |      |iTerm |           | PgUp |      |      |
  *                                  |Space | Bspc |------|           |------|Space | Enter|
- *                                  |      |      |Spotl.|           | PgDn |      |  NUM |
+ *                                  |      |      |Spotl.|           | PgDn | NUM  |      |
  *                                  `--------------------'           `--------------------'
  *
  */
@@ -85,21 +86,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
               //right half
-              TG(NUM),        KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
+              TG(NUMPAD),     KC_6,       KC_7,     KC_8,        KC_9,       KC_0,              KC_BSPC,
               KC_RBRC,        KC_Y,       KC_U,     KC_I,        KC_O,       KC_P,              KC_BSLS,
                               KC_H,       KC_J,     KC_K,        KC_L,       LT(NAV, KC_SCLN),  CTL_T(KC_QUOT),
               KC_MINS,        KC_N,       KC_M,     KC_COMM,     KC_DOT,     KC_SLSH,           KC_LSFT,
                                        KC_RALT,     _____,        _____,     _____,             LCAG(KC_NO),
               PREV_WS,    NEXT_WS,
               KC_PGUP,
-              KC_PGDOWN,   KC_SPC,   LT(NUM, KC_ENT) ),
+              KC_PGDOWN,   LT(NUM, KC_SPC),   KC_ENT ),
 
 /* Keymap 1: Navigation Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      |  Up  |      |      |  F12   |
+ * |        |      |      |      |      |      |      |           |      |      |      |  Up  |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |------|           |------|      | Left | Down | Rigth|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -127,8 +128,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                      xxxxx,
                                                          xxxxx,xxxxx,xxxxx,
                 // right hand
-                xxxxx,  KC_F6,  KC_F7,     KC_F8,       KC_F9,     KC_F10,  KC_F11,
-                xxxxx,  xxxxx,  xxxxx,     KC_UP,       xxxxx,      xxxxx,  KC_F12,
+                xxxxx,  KC_F6,  KC_F7,     KC_F8,       KC_F9,     KC_F10,  xxxxx,
+                xxxxx,  xxxxx,  xxxxx,     KC_UP,       xxxxx,      xxxxx,  xxxxx,
                         xxxxx,  KC_LEFT,   KC_DOWN,  KC_RIGHT,      xxxxx,   xxxxx,
                 xxxxx,  xxxxx,  xxxxx,     xxxxx,       xxxxx,      xxxxx,   xxxxx,
                                 xxxxx,     xxxxx,       xxxxx,      xxxxx,   xxxxx,
@@ -137,18 +138,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 xxxxx, xxxxx, xxxxx ),
 
 
-/* Keymap 4: Numlock
+/* Keymap 4: Num
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           | Play |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           | Next | Vol+ |  7   |  8   |  9   |  *   |  F12   |
+ * |        |      |      |      |      |      |      |           | Next | Vol+ |  7   |  8   |  9   |  *   |        |
  * |--------+------+------+------+------+------|      |           | Song |------+------+------+------+------+--------|
- * |        | P.Tab| P.Ws | N.Ws |N.Tab |      |------|           |------| Vol- |  4   |  5   |  6   |  +   |        |
+ * |        |      |      |      |      |      |------|           |------| Vol- |  4   |  5   |  6   |  +   |        |
  * |--------+------+------+------+------+------|      |           | Prev |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           | Song | Mute |  1   |  2   |  3   |  /   |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |  .   |  0   |  .   |  -   |      |
+ *   |      |      |      |      |      |                                       |  .   |  0   |  .   |  -   | Play |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
@@ -170,16 +171,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        xxxxx,        xxxxx,    xxxxx,
 
        // right hand
-       KC_MPLY       KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,
-       KC_MRWD,      KC_VOLU,    KC_P7,      KC_P8,      KC_P9,      KC_PAST,    KC_F12,
+       xxxxx,        KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     xxxxx,
+       KC_MRWD,      KC_VOLU,    KC_P7,      KC_P8,      KC_P9,      KC_PAST,    xxxxx,
                      KC_VOLD,    KC_P4,      KC_P5,      KC_P6,      KC_PPLS,    xxxxx,
        KC_MFFD,      KC_MUTE,    KC_P1,      KC_P2,      KC_P3,      KC_PSLS,    xxxxx,
-                                 KC_PDOT,    KC_P0,      KC_PDOT,    KC_PMNS,      xxxxx,
+                                 KC_PDOT,    KC_P0,      KC_PDOT,    KC_PMNS,    KC_MPLY,
 
        xxxxx,        xxxxx,
        xxxxx,
-       xxxxx,        xxxxx,    xxxxx
-)
+       xxxxx,        xxxxx,    xxxxx ),
+
+/* Keymap 5: Numpad
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |  7   |  8   |  9   |  *   |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------|      |  4   |  5   |  6   |  +   |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |  1   |  2   |  3   |  /   |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |      |                                       |  .   |  0   |  .   |  -   |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |      |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------        |------|      |      |
+ *                                 |      |      |      |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+[NUMPAD] = KEYMAP(
+               xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
+               xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
+               xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,
+               xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,    xxxxx,    xxxxx,
+               xxxxx,        xxxxx,      xxxxx,    xxxxx,    xxxxx,
+
+                                                                        xxxxx,    xxxxx,
+                                                                                  xxxxx,
+                                                              xxxxx,    xxxxx,    xxxxx,
+
+               // right hand
+               xxxxx,      xxxxx,    xxxxx,      xxxxx,      xxxxx,      xxxxx,      xxxxx,
+               xxxxx,      xxxxx,    KC_P7,      KC_P8,      KC_P9,      KC_PAST,    xxxxx,
+                           xxxxx,    KC_P4,      KC_P5,      KC_P6,      KC_PPLS,    xxxxx,
+               xxxxx,      xxxxx,    KC_P1,      KC_P2,      KC_P3,      KC_PSLS,    xxxxx,
+                                     KC_PDOT,    KC_P0,      KC_PDOT,    KC_PMNS,    xxxxx,
+
+               xxxxx,      xxxxx,
+               xxxxx,
+               xxxxx,      xxxxx,    xxxxx )
 
 };
 
@@ -216,7 +259,7 @@ void matrix_scan_user(void) {
         }
       }
   } else {
-      if(layer != BASE || keyboard_report->mods & MOD_BIT(KC_LSFT)) {
+      if((layer != BASE && layer != NUMPAD) || keyboard_report->mods & MOD_BIT(KC_LSFT)) {
         ergodox_board_led_on();
         board_led_state = ON;
       } else {
@@ -225,7 +268,7 @@ void matrix_scan_user(void) {
       }
   }
 
-  if (!gSwapNumbersAndSymbols) {
+  if (layer == NUMPAD) {
     ergodox_right_led_1_on();
   } else {
     ergodox_right_led_1_off();
