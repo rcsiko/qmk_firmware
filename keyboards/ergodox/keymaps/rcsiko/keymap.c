@@ -63,10 +63,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------+------+------+------+------+------|  =   |           |   -  |------+------+------+------+------+-----------|
  * |   Shift   |   Z  |   X  |   C  |   V  |   B  |  +   |           |   _  |   N  |   M  |   ,  |   .  |  / ? |   Shift   |
  * `-----------+------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
- *     |       |      |      | LAlt | LGui |                                       | RAlt |      |      |      |  LGAC |
+ *     |       |      | LCtrl| LAlt | LGui |                                       | RAlt |      |      |      |  LGAC |
  *     `-----------------------------------'                                       `-----------------------------------'
  *                                         ,-------------.           ,-------------.
- *                                         |Ctl+6 | JtoC |           |Pr.Ws.|Nxt.Ws|
+ *                                         | Del  | JtoC |           |Pr.Ws.|Nxt.Ws|
  *                                  ,------|------|------|           |------+------+------.
  *                                  |      |      |iTerm |           | PgUp |      |      |
  *                                  |Space | Bspc |------|           |------|Space | Enter|
@@ -79,8 +79,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_TAB,         KC_Q,           KC_W,       KC_E,           KC_R,       KC_T,     KC_LBRC,
               CTL_T(KC_ESC),  KC_A,           KC_S,       KC_D,           KC_F,       KC_G,
               KC_LSFT,        KC_Z,           KC_X,       KC_C,           KC_V,       KC_B,     KC_EQL,
-              _____,         _____,           _____,   KC_LALT,        KC_LGUI,
-                                                                 XCODE_SHOW_ITEMS,  XCODE_JUMP_COUNTERPART,
+              _____,         _____,           KC_LCTRL,   KC_LALT,        KC_LGUI,
+                                                                        KC_DELETE,  XCODE_JUMP_COUNTERPART,
                                                                                                      ITERM,
                                                                                 KC_SPC,  KC_BSPC,   SPOTLT,
 
@@ -100,9 +100,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      |  Up  |      |      |        |
+ * |        |      |      |      |      |      |      |           |      |      | PgUp |  Up  | PgDn |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |------|           |------|      | Left | Down | Rigth|      |        |
+ * |        | SFT  | CTRL | ALT  | FUI  |      |------|           |------|      | Left | Down | Right|      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -121,16 +121,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 // left hand
                 xxxxx,    KC_F1,   KC_F2,     KC_F3,     KC_F4,    KC_F5,  xxxxx,
                 xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  xxxxx,
-                xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,
+                xxxxx,    KC_LSFT, KC_LCTRL,  KC_LALT,   KC_LGUI,  xxxxx,
                 xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,    xxxxx,  xxxxx,
                 xxxxx,    xxxxx,   xxxxx,     xxxxx,     xxxxx,
                                                               xxxxx, xxxxx,
                                                                      xxxxx,
                                                          xxxxx,xxxxx,xxxxx,
                 // right hand
-                xxxxx,  KC_F6,  KC_F7,     KC_F8,       KC_F9,     KC_F10,  xxxxx,
-                xxxxx,  xxxxx,  xxxxx,     KC_UP,       xxxxx,      xxxxx,  xxxxx,
-                        xxxxx,  KC_LEFT,   KC_DOWN,  KC_RIGHT,      xxxxx,   xxxxx,
+                xxxxx,  KC_F6,  KC_F7,     KC_F8,       KC_F9,      10,  xxxxx,
+                xxxxx,  xxxxx,  KC_PGUP,   KC_UP,       KC_PGDOWN,  xxxxx,  xxxxx,
+                        xxxxx,  KC_LEFT,   KC_DOWN,     KC_RIGHT,   xxxxx,   xxxxx,
                 xxxxx,  xxxxx,  xxxxx,     xxxxx,       xxxxx,      xxxxx,   xxxxx,
                                 xxxxx,     xxxxx,       xxxxx,      xxxxx,   xxxxx,
                 xxxxx, xxxxx,
