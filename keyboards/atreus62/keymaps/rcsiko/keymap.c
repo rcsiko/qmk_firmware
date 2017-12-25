@@ -70,8 +70,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         { KC_GRV         ,KC_1     ,KC_2     ,KC_3     ,KC_4     ,KC_5          ,_NO_               ,KC_6           ,KC_7    ,KC_8    ,KC_9    ,KC_0              ,KC_BSPC },
         { KC_TAB         ,KC_Q     ,KC_W     ,KC_E     ,KC_R     ,KC_T          ,_NO_               ,KC_Y           ,KC_U    ,KC_I    ,KC_O    ,KC_P              ,KC_BSLS },
         {CTL_T(KC_ESC)   ,KC_A     ,KC_S     ,KC_D     ,KC_F     ,KC_G          ,_NO_               ,KC_H           ,KC_J    ,KC_K    ,KC_L    ,LT(NAV,KC_SCLN)   ,KC_QUOT },
-        { KC_LSFT        ,KC_Z     ,KC_X     ,KC_C     ,KC_V     ,KC_B          ,LT(SYM, KC_SPC)    ,KC_N           ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH           ,KC_RSFT },
-        { KC_LCTL        ,MO(NUM)  ,KC_NO    ,KC_NO    ,KC_LALT  ,GUI_T(KC_SPC) ,LT(SYM, KC_ENT)    ,GUI_T(KC_ENT)  ,KC_RALT ,KC_NO   ,KC_NO   ,KC_RCTRL          ,LCAG(KC_NO) }
+        { KC_LSFT        ,KC_Z     ,KC_X     ,KC_C     ,KC_V     ,KC_B          ,LT(SYM, KC_ENT)    ,KC_N           ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH           ,KC_RSFT },
+        { MO(NUM)        ,KC_NO    ,KC_NO    ,KC_NO    ,KC_LALT  ,KC_RGUI       ,LT(SYM, KC_SPC)    ,GUI_T(KC_ENT)  ,KC_RALT ,KC_NO   ,KC_NO   ,KC_RCTRL          ,LCAG(KC_NO) }
 
     },
 
@@ -141,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          */
     [NUM] = {
 
-        { _____  ,_____  ,_____  ,_____  ,_____  ,_____        ,_NO_       ,_____   ,_____   ,_____  ,_____   ,_____   ,_____ },
+        { _____  ,_____  ,_____  ,_____  ,_____  ,SWAP_SYMS    ,_NO_       ,_____   ,_____   ,_____  ,_____   ,_____   ,_____ },
         { _____  ,_____  ,_____  ,_____  ,_____  ,_____        ,_NO_       ,KC_VOLU ,KC_P7   ,KC_P8  ,KC_P9   ,KC_PAST ,_____ },
         { _____  ,_____  ,_____  ,_____  ,_____  ,_____        ,_NO_       ,KC_VOLD ,KC_4    ,KC_5   ,KC_6    ,KC_PPLS ,_____ },
         { _____  ,_____  ,_____  ,_____  ,_____  ,_____        ,_____      ,KC_MUTE ,KC_1    ,KC_2   ,KC_3    ,KC_PSLS ,_____ },
