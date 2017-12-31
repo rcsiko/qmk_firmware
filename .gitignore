@@ -36,6 +36,7 @@ util/Win_Check_Output.txt
 # Let these ones be user specific, since we have so many different configurations
 .vscode/launch.json
 .vscode/tasks.json
+.vscode/c_cpp_properties.json
 .stfolder
 
 # ignore image files
