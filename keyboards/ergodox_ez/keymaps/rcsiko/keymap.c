@@ -62,12 +62,10 @@
 #define KC_UNDO       LCTL(KC_Z)
 #define KC_REDO       LCTL(LSFT(KC_Z))
 
-#define KC_SPOTLT                      LGUI(KC_SPC)
-#define KC_ITERM                       LALT(KC_SPC)
-#define KC_PREV_TAB                    LGUI(LSFT(KC_LBRC))
-#define KC_NEXT_TAB                    LGUI(LSFT(KC_RBRC))
-#define KC_PREV_WS                     LGUI(LALT(LCTL(KC_LBRC)))
-#define KC_NEXT_WS                     LGUI(LALT(LCTL(KC_RBRC)))
+#define KC_PREV_TAB   LGUI(LSFT(KC_LBRC))
+#define KC_NEXT_TAB   LGUI(LSFT(KC_RBRC))
+#define KC_PREV_WS    LGUI(LALT(LCTL(KC_LBRC)))
+#define KC_NEXT_WS    LGUI(LALT(LCTL(KC_RBRC)))
 
 #define BLINK_BASE  150U // timer threshold for blinking
 
@@ -95,9 +93,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                                         ,-------------.           ,-------------.
   *                                         |  Del |      |           |      | Ins  |
   *                                  ,------|------|------|           |------+------+------.
-  *                                  |      |      |iTerm |           |      |      |      |
+  *                                  |      |      |      |           |      |      |      |
   *                                  |Space | Bspc |------|           |------|Space | Enter|
-  *                                  |      |      |Spotl.|           |      | NUM  |      |
+  *                                  |      |      |      |           |      | NUM  |      |
   *                                  `--------------------'           `--------------------'
   *
   */
@@ -108,8 +106,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ,LSFT   ,Z     ,X     ,C     ,V     ,B    ,EQL                     ,MINS   ,N     ,M     ,COMM  ,DOT   ,SLSH  ,RSFT
     ,____   ,____  ,LCTL  ,LALT  ,LGUI                                                ,RALT  ,____  ,____  ,____  ,LGAC
                                         ,DEL  ,____                    ,____   ,INS
-                                              ,ITERM                   ,____
-                                ,SPC   ,BSPC  ,SPOTLT                  ,____   ,NUM   ,ENT
+                                              ,____                    ,____
+                                ,SPC   ,BSPC  ,____                    ,____   ,NUM   ,ENT
   ),
 
   /* Keymap 1: Navigation Layer
