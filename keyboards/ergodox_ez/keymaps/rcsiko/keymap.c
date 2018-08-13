@@ -68,6 +68,7 @@
 #define KC_PREV_WS    LGUI(LALT(LCTL(KC_LBRC)))
 #define KC_NEXT_WS    LGUI(LALT(LCTL(KC_RBRC)))
 #define KC_GC_UP      LGUI(LCTL(KC_UP))
+#define KC_C_UP       LCTL(KC_UP)
 
 #define BLINK_BASE  150U // timer threshold for blinking
 
@@ -81,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 0: Base Layer
   *
   * ,-----------------------------------------------------.           ,-----------------------------------------------------.
-  * |    `~     |   !  |   @  |   #  |   $  |   %  |  F4  |           |NUMPAD|   ^  |   &  |   *  |   (  |   )  | Backspace |
+  * |    `~     |   !  |   @  |   #  |   $  |   %  |  MC  |           |NUMPAD|   ^  |   &  |   *  |   (  |   )  | Backspace |
   * |-----------+------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
   * |  Tab      |   Q  |   W  |   E  |   R  |   T  |  {   |           |   }  |   Y  |   U  |   I  |   O  |   P  |   \ |     |
   * |-----------+------+------+------+------+------|  [   |           |   ]  |------+------+------+------+------+-----------|
@@ -101,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *
   */
   [BASE]= KEYMAP(
-     GRV    ,1     ,2     ,3     ,4     ,5    ,F4                      ,T_NUM  ,6     ,7     ,8     ,9     ,0     ,BSPC
+     GRV    ,1     ,2     ,3     ,4     ,5    ,C_UP                    ,T_NUM  ,6     ,7     ,8     ,9     ,0     ,BSPC
     ,TAB    ,Q     ,W     ,E     ,R     ,T    ,LBRC                    ,RBRC   ,Y     ,U     ,I     ,O     ,P     ,BSLS
     ,C_ESC  ,A     ,S     ,D     ,F     ,G                                     ,H     ,J     ,K     ,L     ,NAV   ,C_QUOT
     ,LSFT   ,Z     ,X     ,C     ,V     ,B    ,EQL                     ,MINS   ,N     ,M     ,COMM  ,DOT   ,SLSH  ,RSFT
