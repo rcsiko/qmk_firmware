@@ -47,6 +47,7 @@
 #define KC_xxxx       KC_TRNS
 
 #define KC_C_ESC      CTL_T(KC_ESC)
+#define KC_S_BSPC     SFT_T(KC_BSPC)
 #define KC_C_QUOT     CTL_T(KC_QUOT)
 #define KC_T_NUM      TG(NUM)
 #define KC_NUM        LT(NUM, KC_SPC)
@@ -66,10 +67,10 @@
 #define KC_NEXT_TAB   LGUI(LSFT(KC_RBRC))
 #define KC_PREV_WS    LGUI(LALT(LCTL(KC_LBRC)))
 #define KC_NEXT_WS    LGUI(LALT(LCTL(KC_RBRC)))
+#define KC_GC_UP      LGUI(LCTL(KC_UP))
 
 #define BLINK_BASE  150U // timer threshold for blinking
 
-static bool gSwapNumbersAndSymbols = true;
 typedef enum onoff_t {OFF, ON} onoff;
 
 enum own_keys {
@@ -95,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                                  ,------|------|------|           |------+------+------.
   *                                  |      |      |      |           |      |      |      |
   *                                  |Space | Bspc |------|           |------|Space | Enter|
-  *                                  |      |      |      |           |      | NUM  |      |
+  *                                  |      | Shift|  J2H |           |      | NUM  |      |
   *                                  `--------------------'           `--------------------'
   *
   */
@@ -107,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ,____   ,____  ,LCTL  ,LALT  ,LGUI                                                ,RALT  ,____  ,____  ,____  ,LGAC
                                         ,DEL  ,____                    ,____   ,INS
                                               ,____                    ,____
-                                ,SPC   ,BSPC  ,____                    ,____   ,NUM   ,ENT
+                                ,SPC   ,S_BSPC,GC_UP                   ,____   ,NUM   ,ENT
   ),
 
   /* Keymap 1: Navigation Layer
@@ -255,54 +256,5 @@ void matrix_scan_user(void) {
 };
 
 bool process_record_user(uint16_t kc, keyrecord_t *rec) {
-    uint8_t layer = biton32(layer_state);
-
-    if (kc == SWAP_SYMS) {
-      if (rec->event.pressed) {
-        gSwapNumbersAndSymbols = !gSwapNumbersAndSymbols;
-      }
-    }
-
-    // Swap the numbers and symbols on the base layer if no other modifier is pressed
-    if (gSwapNumbersAndSymbols &&
-        !(keyboard_report->mods & (~MOD_BIT(KC_LSFT) & ~MOD_BIT(KC_RSFT))) && //    modifier being pressed
-        layer == BASE &&
-        (kc == KC_1 ||
-         kc == KC_2 ||
-         kc == KC_3 ||
-         kc == KC_4 ||
-         kc == KC_5 ||
-         kc == KC_6 ||
-         kc == KC_7 ||
-         kc == KC_8 ||
-         kc == KC_9 ||
-         kc == KC_0)) {
-
-        if (rec->event.pressed) {
-            uint8_t lshifted = keyboard_report->mods & MOD_BIT(KC_LSFT);
-            uint8_t osmlshifted = get_oneshot_mods() & MOD_BIT(KC_LSFT) && !has_oneshot_mods_timed_out();
-
-            unregister_mods(MOD_LSFT);
-
-            if (lshifted) {
-                unregister_mods(MOD_LSFT);
-                register_code(kc);
-                register_mods(MOD_LSFT);
-            } else if (osmlshifted) {
-                clear_oneshot_mods();
-                register_code(kc);
-            } else {
-                register_mods(MOD_LSFT);
-                register_code(kc);
-                unregister_mods(MOD_LSFT);
-            }
-        } else {
-            unregister_code(kc);
-        }
-
-        return false;
-    }
-
     return true;
-
 }
