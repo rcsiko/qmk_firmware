@@ -47,7 +47,7 @@
 #define KC_xxxx       KC_TRNS
 
 #define KC_C_ESC      CTL_T(KC_ESC)
-#define KC_S_BSPC     SFT_T(KC_BSPC)
+#define KC_S_SPC      SFT_T(KC_SPC)
 #define KC_C_QUOT     CTL_T(KC_QUOT)
 #define KC_T_NUM      TG(NUM)
 #define KC_NUM        LT(NUM, KC_SPC)
@@ -109,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ,____   ,____  ,LCTL  ,LALT  ,LGUI                                                ,RALT  ,____  ,____  ,____  ,LGAC
                                         ,DEL  ,____                    ,____   ,INS
                                               ,____                    ,____
-                                ,SPC   ,S_BSPC,GC_UP                   ,____   ,NUM   ,ENT
+                                ,S_SPC  ,BSPC  ,GC_UP                   ,____   ,NUM   ,ENT
   ),
 
   /* Keymap 1: Navigation Layer
@@ -171,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      xxxx  ,F1    ,F2    ,F3    ,F4    ,F5    ,xxxx             ,xxxx  ,F6    ,F7    ,F8  ,F9    ,F10   ,xxxx
     ,xxxx  ,F11   ,F12   ,xxxx  ,xxxx  ,xxxx  ,xxxx             ,MRWD  ,VOLU  ,P7    ,P8  ,P9    ,PAST  ,xxxx
     ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx                           ,VOLD  ,P4    ,P5  ,P6    ,PPLS  ,xxxx
-    ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx             ,MFFD  ,MUTE  ,P3    ,P2  ,P1    ,PSLS  ,xxxx
+    ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx             ,MFFD  ,MUTE  ,P1    ,P2  ,P3    ,PSLS  ,xxxx
     ,xxxx  ,xxxx  ,xxxx  ,xxxx  ,xxxx                                         ,PDOT  ,P0  ,PDOT  ,PMNS  ,MPLY
                                        ,xxxx  ,xxxx             ,xxxx  ,xxxx
                                               ,xxxx             ,xxxx
